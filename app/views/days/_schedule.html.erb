@@ -1,0 +1,15 @@
+<table border="0">
+  <% @days.each do |day| %>
+    <tr id="<%= dom_id(day) %>">
+      <td class="schedule-date"><%= day.date.to_formatted_s(:long) %></td>
+      <td class="schedule-quota">
+        <% if day.date >= Date.today %>
+          <%= text_field_tag :quota, n(day.quota), :class => "day-quota" %>
+        <% else %>
+          <%= n(day.quota) %>
+        <% end %>
+      </td>
+      <td class="schedule-points"><%=n day.current_points %></td>
+    </tr>
+  <% end %>
+</table>

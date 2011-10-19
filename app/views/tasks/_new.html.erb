@@ -1,0 +1,20 @@
+<%= form_for @new_task, :remote => true do |f| %>
+  <table border="0">
+    <thead>
+      <th colspan="2">Add a Task</th>
+    </thead>
+    <tbody>
+      <tr>
+        <td><%= f.label :name %></td>
+        <td><%= f.text_field :name %></td>
+      </tr>
+      <tr>
+        <td><%= f.label :required_points, "Points" %></td>
+        <td><%= f.text_field :required_points %></td>
+      </tr>
+      <tr>
+        <td colspan="2"><%= f.submit "Add Task" %></td>
+      </td>
+    </tbody>
+  </table>
+<% end %>

@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  day_id: 1
+  value: 1
+  task_id: 1
+
+two:
+  day_id: 1
+  value: 1
+  task_id: 1

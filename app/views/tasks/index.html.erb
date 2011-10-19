@@ -1,0 +1,49 @@
+<div id="header">
+  <div id="stats-holder">
+    Active Quota: <span id="stats" <%= @user.current_quota < 0 ? "class='negative'" : "" %>><%=n @user.current_quota %></span>
+  </div>
+</div>
+
+<div id="tasks-container">
+  <div id="days-chart"></div>
+  <script type="text/javascript">
+    $.chart_data = $.parseJSON('<%=raw user.chart.to_json %>');
+    chartDays();
+  </script>
+
+  <table id="tasks">
+    <tbody>
+      <tr id="todays-quota">
+        <input type="hidden" class="achieved" value="<%= user.todays_points %>" />
+        <input type="hidden" class="quota" value="<%= user.todays_quota %>" />
+        <td></td>
+        <td class="task-name">Today's Quota</td>
+        <td class="task-bar">
+          <%= render :partial => "progress" %>
+        </td>
+        <td></td>
+      </tr>
+      <% @tasks.each do |task| %>
+        <% @task = task %>
+        <%= render :partial => "show" %>
+      <% end %>
+    </tbody>
+  </table>
+
+  <div id="bottom-content">
+    <div id="new-task">
+      <%= render :partial => "new" %>
+    </div>
+
+    <div id="schedule">
+      <% @days = user.scheduling_days %>
+      <% user.scheduling_days.in_groups(3) do |days| %>
+        <% @days = days.compact %>
+        <div class="schedule-group">
+          <%= render :partial => "days/schedule" %>
+        </div>
+      <% end %>
+    </div>
+    <div style="clear: both;"></div>
+  </div>
+</div>
