@@ -3,12 +3,6 @@
 //= require_tree .
 
 function setGlobalQuota(value) {
-  var cur = parseFloat($("#stats").text());
-  var diff = cur - value;
-  setQuota(diff);
-}
-
-function setQuota(value) {
   $("#stats").text(value);
   if (value < 0)
     $("#stats").addClass("negative");
@@ -26,7 +20,7 @@ function setProgress(elm, taskQuota, total) {
     if (value > containerWidth)
       value = containerWidth;
   }
-  elm.animate({ width: value }, "slow");
+  elm.clearQueue().animate({ width: value }, "slow");
 }
 
 function initProgress() {
@@ -44,7 +38,7 @@ function updateQuota(elm) {
 function chartDays() {
   var data = [];
   for (var i = 0; i < $.chart_data.length; ++i) {
-    if ($("#chart_" + $.chart_data[i].label + ":checked").length == 1 || $.chart_data[i].label == "Total") {
+    if ($("input:checkbox[value='" + $.chart_data[i].label + "']:checked").length == 1 || $.chart_data[i].label == "Total") {
       data.push($.chart_data[i]);
     }
   }
@@ -69,6 +63,12 @@ function chartDays() {
     grid: {
       color: "#ddd"
     }
+  });
+  $(".yAxis:first .tickLabel").css({
+    right: "auto",
+    left: "0px",
+    width: "50px",
+    marginLeft: "-40px"
   });
 }
 

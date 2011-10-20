@@ -9,7 +9,7 @@ setProgress(task.find(".task-progress"),       <%= @task.required_points %>, <%=
 setProgress($("#todays-quota .task-progress"), <%= user.todays_quota %>, <%= user.todays_points %>);
 
 // Set active quota.
-setGlobalQuota(<%= @value %>);
+setGlobalQuota(<%= user.current_quota %>);
 
 <% @point = [@point] unless @point.is_a? Array %>
 <% @point.each do |point| %>

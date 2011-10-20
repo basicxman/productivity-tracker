@@ -2,7 +2,7 @@
   <input type="hidden" class="achieved" value="<%= @task.achieved_points %>" />
   <input type="hidden" class="quota" value="<%= @task.required_points %>" />
   <td class="task-controls">
-    <%= check_box_tag "chart_" + @task.name %>
+    <%= check_box_tag "chart", @task.name %>
   </td>
   <td class="task-name"><%= @task.name %> (<span class="achieved"><%=n @task.achieved_points %></span> / <span class="quota"><%=n @task.required_points %></span>)</td>
   <td class="task-bar">

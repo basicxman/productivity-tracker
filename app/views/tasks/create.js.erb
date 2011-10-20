@@ -1,2 +1,4 @@
 $("<%=j render :partial => "show" %>").insertAfter("#tasks tr:last");
 $("#new-task input:text").val("");
+$.chart_data = $.parseJSON('<%=raw user.chart.to_json %>');
+chartDays();

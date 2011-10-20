@@ -1,2 +1,2 @@
-setQuota(<%= user.current_quota %>);
+setGlobalQuota(<%= user.current_quota %>);
 setProgress($("#todays-quota").find(".task-progress"), <%= user.required_points %>, <%= user.todays_points %>);
