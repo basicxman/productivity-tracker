@@ -11,9 +11,12 @@ setProgress($("#todays-quota .task-progress"), <%= user.todays_quota %>, <%= use
 // Set active quota.
 setGlobalQuota(<%= @value %>);
 
-// Update points in scheduling area.
-$("#<%= dom_id(@point.day) %> .schedule-points").text("<%=n @point.day.current_points %>");
+<% @point = [@point] unless @point.is_a? Array %>
+<% @point.each do |point| %>
+  // Update points in scheduling area.
+  $("#<%= dom_id(point.day) %> .schedule-points").text("<%=n point.day.current_points %>");
 
-// Update chart.
-checkChartDataForDay(<%= @point.day.date.to_datetime.to_i * 1000 %>);
-updateTaskChart("<%= @task.name %>", <%= @point.value %>, <%= @point.day.date.to_datetime.to_i * 1000 %>);
+  // Update chart.
+  checkChartDataForDay(<%= point.day.date.to_datetime.to_i * 1000 %>);
+  updateTaskChart("<%= @task.name %>", <%= point.value %>, <%= point.day.date.to_datetime.to_i * 1000 %>);
+<% end %>
