@@ -1,3 +1,45 @@
-// Place all the styles related to the days controller here.
-// They will automatically be included in application.css.
-// You can use Sass (SCSS) here: http://sass-lang.com/
+table.calendar {
+  $radius: 15px;
+  background: rgba(0, 0, 0, 0.1);
+
+  table-layout: fixed;
+  width: 600px;
+  border-collapse: collapse;
+
+  th, td {
+    text-align: center;
+    border: 1px solid #333;
+  }
+
+  th {
+    padding: 10px;
+  }
+
+  td {
+    vertical-align: top;
+    width: 90px;
+    height: 70px;
+    font-size: 0.9em;
+
+    .day-heading {
+      padding: 0px 5px;
+      span {
+        color: #ddd;
+        float: left;
+        &.schedule-points {
+          float: right;
+          color: #39f;
+        }
+      }
+    }
+
+    .schedule-quota {
+      padding: 10px;
+      font-size: 1.1em;
+    }
+
+    &:hover {
+      span { color: #fff; }
+    }
+  }
+}

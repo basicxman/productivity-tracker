@@ -91,25 +91,6 @@ table#tasks {
       }
     }
   }
-
-  #schedule {
-    .schedule-group {
-      margin: 15px;
-      min-width: 250px;
-      float: left;
-
-      table {
-        background: rgba(0, 0, 0, 0.3);
-        @include border-radius(10px);
-
-        td {
-          padding: 15px 10px;
-        }
-        tr td:first-child { padding-left: 15px; }
-        tr td:last-child  { padding-right: 15px; }
-      }
-    }
-  }
 }
 
 table {
@@ -119,7 +100,7 @@ table {
 }
 
 @mixin field {
-  $shadow: inset 1px 1px 3px rgba(0, 0, 0, 0.3);
+  $shadow: inset 1px 1px 3px rgba(0, 0, 0, 0.1);
   @include box-shadow($shadow);
   @include border-radius(3px);
   border: 1px solid #ccc;
@@ -130,8 +111,9 @@ input[type="text"], input[type="password"] {
   height: 18px;
   padding: 4px;
   font-size: 13px;
-  color: #000;
+  color: #888;
   @include field;
+  margin: 5px 5px;
 
   &:active, &:hover, &:focus {
     $shadow: inset 0px 1px 3px rgba(0, 0, 0, 0.1), -1px -1px 12px rgba(82, 168, 236, 0.6), 1px 1px 12px rgba(82, 168, 236, 0.6);
@@ -140,14 +122,20 @@ input[type="text"], input[type="password"] {
   }
 
   &.day-quota {
-    width: 25px;
+    width: 30px;
+    font-size: 12px;
+    height: 10px;
+    @include box-shadow(none);
   }
+
+  &.filled { color: #000; }
 }
 
 input[type="submit"] {
   @include button(#555);
   color: #eee;
   text-shadow: none;
+  margin: 3px;
 }
 
 form {
@@ -157,50 +145,54 @@ form {
 }
 
 .pill-button {
-  background-color: #39f;
-  border: 3px solid rgba(0, 0, 0, 0.7);
   float: left;
-  text-align: center;
+
+  &.positive { @include button(rgb(50, 50, 50)); }
+  &.negative { @include button(rgb(60, 60, 60)); }
+
+  padding: 0px;
   margin: 0px 5px;
+  text-align: center;
 
   &.large {
     font-size: 28px;
-    width: 25px;
-    height: 25px;
-    line-height: 25px;
-    &.negative {
-      line-height: 20px;
-    }
-    @include border-radius(15px);
-  }
-
-  &.small {
-    font-size: 18px;
-    margin-top: 5px;
     width: 15px;
     height: 15px;
     line-height: 15px;
+
     &.negative {
-      line-height: 12px;
+      line-height: 10px;
     }
-    @include border-radius(15px);
   }
 
-  &:hover {
-    border-color: rgba(0, 0, 0, 0.5);
-    $shadow: 1px 1px 1px rgba(255, 255, 255, 0.5), -1px -1px 1px rgba(255, 255, 255, 0.5);
-    @include box-shadow($shadow);
+  &.small {
+    font-size: 20px;
+    width: 10px;
+    height: 10px;
+    line-height: 10px;
+    margin-top: 3px;
   }
 
   a {
     display: block;
     text-decoration: none;
-    color: #333;
+    color: #ddd;
+  }
+}
+
+#top-container {
+  margin: 0px 38px;
+  #schedule {
+    width: 620px;
+    float: left;
+  }
+  #control-panel {
+    float: left;
   }
 }
 
 #days-chart {
-  height: 500px;
+  height: 300px;
   margin: 40px 160px 40px 40px;
 
   .legend {
@@ -208,5 +200,20 @@ form {
     td {
       padding: 10px;
     }
+  }
+}
+
+img.graph-visible {
+  display: none;
+}
+
+div.graph-visible, div.graph-hidden { cursor: pointer; }
+.graph-button {
+  cursor: pointer;
+
+  &:hover {
+    $shadow: inset 0px 1px 3px rgba(0, 0, 0, 0.1), -1px -1px 12px rgba(82, 168, 236, 0.6), 1px 1px 12px rgba(82, 168, 236, 0.6);
+    @include box-shadow($shadow);
+    outline: none;
   }
 }

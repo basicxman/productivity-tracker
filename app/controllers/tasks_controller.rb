@@ -2,6 +2,7 @@ class TasksController < ApplicationController
   respond_to :js, :except => [:index]
 
   def index
+    user.fill_future
     @tasks = user.tasks
     @new_task = Task.new
   end

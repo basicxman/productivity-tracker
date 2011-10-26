@@ -38,7 +38,7 @@ function updateQuota(elm) {
 function chartDays() {
   var data = [];
   for (var i = 0; i < $.chart_data.length; ++i) {
-    if ($("input:checkbox[value='" + $.chart_data[i].label + "']:checked").length == 1 || $.chart_data[i].label == "Total") {
+    if ($(".task-controls img.graph-visible:visible[data-task='" + $.chart_data[i].label + "']").length == 1 || $.chart_data[i].label == "Total") {
       data.push($.chart_data[i]);
     }
   }
@@ -121,7 +121,29 @@ $(function() {
     $.timeout = setTimeout(updateQuota.apply(this, [$(this)]), 500);
   });
   
-  $(".task-controls input:checkbox").change(function() {
+  $("img.graph-hidden").click(function() {
+    $(this).hide();
+    $(this).parent().parent().find("img.graph-visible").show();
     chartDays();
+  });
+
+  $("img.graph-visible").click(function() {
+    $(this).hide();
+    $(this).parent().parent().find("img.graph-hidden").show();
+    chartDays();
+  });
+
+  $("form input:text").focusin(function() {
+    if ($(this).val() == $(this).data("default")) {
+      $(this).val("");
+      $(this).addClass("filled");
+    }
+  });
+
+  $("form input:text").focusout(function() {
+    if ($(this).val() == "") {
+      $(this).val($(this).data("default"));
+      $(this).removeClass("filled");
+    }
   });
 });

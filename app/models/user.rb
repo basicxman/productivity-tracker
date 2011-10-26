@@ -5,11 +5,11 @@ class User < ActiveRecord::Base
 
   validates_uniqueness_of :email
 
-  after_create :add_week
+  after_create :fill_future
 
-  def add_week
-    Date.today.upto(Date.today + 6.days) do |day|
-      self.days << Day.create(:date => day, :quota => 0)
+  def fill_future
+    Date.today.upto(Date.today.end_of_month.end_of_week) do |day|
+      self.days << Day.create(:date => day, :quota => 0) if self.days.find_by_date(day).nil?
     end
   end
 

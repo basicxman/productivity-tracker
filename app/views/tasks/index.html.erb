@@ -5,11 +5,19 @@
 </div>
 
 <div id="tasks-container">
-  <div id="days-chart"></div>
-  <script type="text/javascript">
-    $.chart_data = $.parseJSON('<%=raw user.chart.to_json %>');
-    chartDays();
-  </script>
+  <div id="top-container">
+    <div id="schedule">
+      <% @month = month %>
+      <%= render :partial => "days/schedule" %>
+    </div>
+    <div id="control-panel">
+      <div id="new-task">
+        <%= render :partial => "new" %>
+      </div>
+    </div>
+    <div style="clear: both;"></div>
+  </div>
+
 
   <table id="tasks">
     <tbody>
@@ -31,19 +39,10 @@
   </table>
 
   <div id="bottom-content">
-    <div id="new-task">
-      <%= render :partial => "new" %>
-    </div>
-
-    <div id="schedule">
-      <% @days = user.scheduling_days %>
-      <% user.scheduling_days.in_groups(3) do |days| %>
-        <% @days = days.compact %>
-        <div class="schedule-group">
-          <%= render :partial => "days/schedule" %>
-        </div>
-      <% end %>
-    </div>
-    <div style="clear: both;"></div>
+    <div id="days-chart"></div>
+    <script type="text/javascript">
+      $.chart_data = $.parseJSON('<%=raw user.chart.to_json %>');
+      chartDays();
+    </script>
   </div>
 </div>

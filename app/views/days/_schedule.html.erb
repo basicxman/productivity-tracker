@@ -1,15 +1,28 @@
-<table border="0">
-  <% @days.each do |day| %>
-    <tr id="<%= dom_id(day) %>">
-      <td class="schedule-date"><%= day.date.to_formatted_s(:long) %></td>
-      <td class="schedule-quota">
-        <% if day.date >= Date.today %>
-          <%= text_field_tag :quota, n(day.quota), :class => "day-quota" %>
-        <% else %>
-          <%= n(day.quota) %>
-        <% end %>
-      </td>
-      <td class="schedule-points"><%=n day.current_points %></td>
+<script type="text/javascript">
+  $.current_month = <%= @month %>;
+</script>
+<table id="calendar" class="calendar">
+  <thead>
+    <tr>
+      <% week_headings.each do |heading| %>
+        <th><%= heading %></th>
+      <% end %>
     </tr>
-  <% end %>
+  </thead>
+  <tbody>
+    <% month_viewing_range_in_weeks(@month).each do |week| %>
+      <tr class="week">
+        <% week.each do |day| %>
+          <% data = get_data_for_day(day) %>
+          <td <%= data[:cell] %>>
+            <div class="day-heading"><span><%= ordinal(day) %></span><span class="schedule-points"><%= data[:points] %></span></div>
+            <div style="clear: both;"></div>
+            <div class="schedule-quota">
+              <%= data[:quota_input] %>
+            </div>
+          </td>
+        <% end %>
+      </tr>
+    <% end %>
+  </tbody>
 </table>
