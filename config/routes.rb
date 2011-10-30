@@ -7,6 +7,8 @@ Scheduler::Application.routes.draw do
   end
 
   match "days/:id/change_quota" => "days#change_quota"
+  match "days/fill_dates"       => "days#fill_dates",    :as => :fill_dates
+  match "days/display_month"    => "days#display_month", :as => :display_month
 
   match "/logout" => "sessions#destroy", :as => :logout
   root :to => "sessions#new"

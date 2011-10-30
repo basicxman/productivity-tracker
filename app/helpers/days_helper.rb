@@ -1,4 +1,21 @@
 module DaysHelper
+  def date_link(date)
+    link_to month(date), display_month_path(:month => date.month, :year => date.year), :remote => true
+  end
+
+  def eligible_date(num_date)
+    date  = number_to_date(num_date[:month], num_date[:year])
+    range = month_viewing_range(date)
+    return false unless date > Date.today
+
+    number_of_registered_days = user.days.where(:date => range).count
+    range.count != number_of_registered_days
+  end
+
+  def fill_dates_link(num_date)
+    link_to "Fill Dates", fill_dates_path(:month => num_date[:month], :year => num_date[:year]), :remote => true
+  end
+
   def ordinal(day)
     "#{day.day}<sup>#{day.day.ordinalize[-2, 2]}</sup>".html_safe
   end
@@ -7,8 +24,28 @@ module DaysHelper
     %w( Sun Mon Tue Wed Thu Fri Sat )
   end
 
-  def month
-    Date.today.month
+  def get_month_and_year
+    { :month => Date.today.month, :year => Date.today.year }
+  end
+
+  def prev_month(month, year)
+    number_to_date(month, year) - 1.month
+  end
+
+  def next_month(month, year)
+    number_to_date(month, year) + 1.month
+  end
+
+  def month(date)
+    date.strftime("%B")
+  end
+
+  def month_year(date)
+    date.strftime("%B %Y")
+  end
+
+  def number_to_date(month, year)
+    Date.parse("#{year}-#{month}-1")
   end
 
   def month_viewing_range(date)
@@ -17,8 +54,8 @@ module DaysHelper
     start_date..end_date
   end
 
-  def month_viewing_range_in_weeks(month_num)
-    date = Date.parse("#{Date.today.year}-#{month_num}-1")
+  def month_viewing_range_in_weeks(month, year)
+    date = number_to_date(month, year)
     month_viewing_range(date).to_a.in_groups_of(7)
   end
 

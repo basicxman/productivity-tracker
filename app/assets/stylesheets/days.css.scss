@@ -42,4 +42,23 @@ table.calendar {
       span { color: #fff; }
     }
   }
+
+  th a {
+    text-decoration: none;
+    color: #eee;
+    font-weight: 900;
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+
+  tfoot {
+    td {
+      height: auto;
+      padding: 10px;
+    }
+    a {
+      color: #eee;
+    }
+  }
 }

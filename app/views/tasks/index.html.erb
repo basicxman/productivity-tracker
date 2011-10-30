@@ -2,12 +2,14 @@
   <div id="stats-holder">
     Active Quota: <span id="stats" <%= @user.current_quota < 0 ? "class='negative'" : "" %>><%=n @user.current_quota %></span>
   </div>
+
+  <a href="javascript:void(0);" id="toggle-control-panel"><span>Toggle Control Panel</span></a>
 </div>
 
 <div id="tasks-container">
   <div id="top-container">
     <div id="schedule">
-      <% @month = month %>
+      <% @date = get_month_and_year %>
       <%= render :partial => "days/schedule" %>
     </div>
     <div id="control-panel">

@@ -112,22 +112,22 @@ function updateTaskChart(taskName, achievedPoints, affectedDate) {
 $(function() {  
   setTimeout(initProgress, 500);
 
-  $(".day-quota").change(function() {
+  $(".day-quota").live("change", function() {
     updateQuota($(this));
   });
 
-  $(".day-quota").keyup(function() {
+  $(".day-quota").live("keyup", function() {
     if ($.timeout !== undefined) clearTimeout($.timeout);
     $.timeout = setTimeout(updateQuota.apply(this, [$(this)]), 500);
   });
   
-  $("img.graph-hidden").click(function() {
+  $("img.graph-hidden").live("click", function() {
     $(this).hide();
     $(this).parent().parent().find("img.graph-visible").show();
     chartDays();
   });
 
-  $("img.graph-visible").click(function() {
+  $("img.graph-visible").live("click", function() {
     $(this).hide();
     $(this).parent().parent().find("img.graph-hidden").show();
     chartDays();
@@ -145,5 +145,17 @@ $(function() {
       $(this).val($(this).data("default"));
       $(this).removeClass("filled");
     }
+  });
+
+  $("#toggle-control-panel").click(function() {
+    $("#top-container").slideToggle();
+  });
+
+  $(window).bind("ajax:beforeSend", function() {
+    $("#loader-container").show();
+  });
+
+  $(window).bind("ajax:complete", function() {
+    $("#loader-container").hide();
   });
 });

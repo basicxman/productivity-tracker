@@ -7,8 +7,8 @@ class User < ActiveRecord::Base
 
   after_create :fill_future
 
-  def fill_future
-    Date.today.upto(Date.today.end_of_month.end_of_week) do |day|
+  def fill_future(date = Date.today)
+    date.upto(date.end_of_month.end_of_week) do |day|
       self.days << Day.create(:date => day, :quota => 0) if self.days.find_by_date(day).nil?
     end
   end

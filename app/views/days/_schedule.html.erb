@@ -1,8 +1,10 @@
-<script type="text/javascript">
-  $.current_month = <%= @month %>;
-</script>
 <table id="calendar" class="calendar">
   <thead>
+    <tr>
+      <th colspan="2">&laquo; <%= date_link(prev_month(@date[:month], @date[:year])) %></th>
+      <th colspan="3"><%= month_year(number_to_date(@date[:month], @date[:year])) %></th>
+      <th colspan="2"><%= date_link(next_month(@date[:month], @date[:year])) %> &raquo;</th>
+    </tr>
     <tr>
       <% week_headings.each do |heading| %>
         <th><%= heading %></th>
@@ -10,7 +12,7 @@
     </tr>
   </thead>
   <tbody>
-    <% month_viewing_range_in_weeks(@month).each do |week| %>
+    <% month_viewing_range_in_weeks(@date[:month], @date[:year]).each do |week| %>
       <tr class="week">
         <% week.each do |day| %>
           <% data = get_data_for_day(day) %>
@@ -25,4 +27,11 @@
       </tr>
     <% end %>
   </tbody>
+  <% if eligible_date(@date) %>
+    <tfoot>
+      <tr>
+        <td colspan="7"><%= fill_dates_link(@date) %></td>
+      </tr>
+    </tfoot>
+  <% end %>
 </table>

@@ -70,6 +70,7 @@ table#tasks {
   @include background-gradient(#333, #222);
   @include box-shadow(inset 0 -1px 0 rgba(0, 0, 0, 0.1));
   #stats-holder {
+    float: left;
     margin: 6px 15px;
     #stats {
       &.negative {
@@ -77,6 +78,13 @@ table#tasks {
         border-color: #39f;
       }
     }
+  }
+
+  a {
+    text-decoration: none;
+    float: left;
+    margin-top: 6px;
+    cursor: pointer;
   }
 }
 
@@ -147,37 +155,41 @@ form {
 .pill-button {
   float: left;
 
-  &.positive { @include button(rgb(50, 50, 50)); }
-  &.negative { @include button(rgb(60, 60, 60)); }
+  &.positive { a { @include button(rgb(50, 50, 50)); } }
+  &.negative { a { @include button(rgb(60, 60, 60)); } }
 
   padding: 0px;
   margin: 0px 5px;
   text-align: center;
 
   &.large {
-    font-size: 28px;
-    width: 15px;
-    height: 15px;
-    line-height: 15px;
+    a {
+      font-size: 28px;
+      width: 15px;
+      height: 15px;
+      line-height: 15px;
+    }
 
     &.negative {
-      line-height: 10px;
+      a { line-height: 10px; }
     }
   }
 
   &.small {
-    font-size: 20px;
-    width: 10px;
-    height: 10px;
-    line-height: 10px;
-    margin-top: 3px;
+    a {
+      font-size: 20px;
+      width: 10px;
+      height: 10px;
+      line-height: 10px;
+      margin-top: 3px;
+    }
   }
 
   a {
     display: block;
     text-decoration: none;
     color: #ddd;
-  }
+}
 }
 
 #top-container {
@@ -215,5 +227,21 @@ div.graph-visible, div.graph-hidden { cursor: pointer; }
     $shadow: inset 0px 1px 3px rgba(0, 0, 0, 0.1), -1px -1px 12px rgba(82, 168, 236, 0.6), 1px 1px 12px rgba(82, 168, 236, 0.6);
     @include box-shadow($shadow);
     outline: none;
+  }
+}
+
+#loader-container {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  z-index: 10;
+  display: none;
+
+  #loader {
+    margin: 200px auto;
+    background: rgba(0, 0, 0, 0.9) image-url("ajax-loader.gif") no-repeat center center;
+    width: 80px;
+    height: 80px;
+    @include border-radius(10px);
   }
 }
