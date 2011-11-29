@@ -1,3 +1,12 @@
+function updateQuotas(rollingQuota, todaysQuota, todaysPoints) {
+  setProgress($("#rolling-quota .task-progress"), rollingQuota, todaysPoints);
+  setProgress($("#todays-quota .task-progress"), todaysQuota, todaysPoints);
+  $("#todays-quota  span.achieved").text(todaysPoints);
+  $("#rolling-quota span.achieved").text(todaysPoints);
+  $("#todays-quota  span.quota").text(todaysQuota);
+  $("#rolling-quota span.quota").text(rollingQuota);
+}
+
 $(function() {
   $(".task-bar.pointer").live("click", function() {
     var elm = $(this).parent().next();

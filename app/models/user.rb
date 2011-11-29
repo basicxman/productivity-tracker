@@ -33,14 +33,20 @@ class User < ActiveRecord::Base
     required_points - achieved_points
   end
 
-  def todays_quota
+  # The Rolling Quota is the remaining or excesss quota from the past 31 days
+  # in addition to the current days quota.
+  def rolling_quota
     points = required_points
     window = self.days.where("date > ? and date < ?", Date.today - 31.days, Date.today)
     points - Point.where(:day_id => window).sum("value")
   end
 
+  def todays_quota
+    self.days.find_by_date(Date.today).quota
+  end
+
   def todays_points
-    self.days.find(:first, :conditions => { :date => Date.today }).points.sum("value")
+    self.days.find_by_date(Date.today).points.sum("value")
   end
 
   def chart

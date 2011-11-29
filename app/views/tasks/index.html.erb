@@ -1,6 +1,6 @@
 <div id="header">
   <div id="stats-holder">
-    Active Quota: <span id="stats" <%= @user.current_quota < 0 ? "class='negative'" : "" %>><%=n @user.current_quota %></span>
+    Rolling Quota: <span id="stats" <%= @user.current_quota < 0 ? "class='negative'" : "" %>><%=n @user.current_quota %></span>
   </div>
 
   <a href="javascript:void(0);" id="toggle-control-panel"><span>Toggle Control Panel</span></a>
@@ -23,11 +23,21 @@
 
   <table id="tasks">
     <tbody>
+      <tr id="rolling-quota">
+        <input type="hidden" class="achieved" value="<%= user.todays_points %>" />
+        <input type="hidden" class="quota" value="<%= user.rolling_quota %>" />
+        <td></td>
+        <td class="task-name">Rolling Quota (<span class="achieved"><%=n user.todays_points %></span> / <span class="quota"><%=n user.rolling_quota %></span>)</td>
+        <td class="task-bar">
+          <%= render :partial => "progress" %>
+        </td>
+        <td></td>
+      </tr>
       <tr id="todays-quota">
         <input type="hidden" class="achieved" value="<%= user.todays_points %>" />
         <input type="hidden" class="quota" value="<%= user.todays_quota %>" />
         <td></td>
-        <td class="task-name">Today's Quota</td>
+        <td class="task-name">Today's Quota (<span class="achieved"><%=n user.todays_points %></span> / <span class="quota"><%=n user.todays_quota %></span>)</td>
         <td class="task-bar">
           <%= render :partial => "progress" %>
         </td>
