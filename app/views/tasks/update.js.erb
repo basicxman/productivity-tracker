@@ -1,0 +1,9 @@
+var elm = $("#<%= dom_id(@task) %>");
+var pts = elm.next().find(".custom-points");
+pts.val(pts.data("default"));
+elm.children(".task-name").children(".name").text("<%= @task.name %>");
+elm.children(".task-name").children(".quota").text("<%=n @task.required_points %>");
+
+setProgress(elm.find(".task-progress"), <%= @task.required_points %>, <%= @task.achieved_points %>);
+
+<%= render :partial => "points" %>

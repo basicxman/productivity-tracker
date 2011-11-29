@@ -1,3 +1,78 @@
-// Place all the styles related to the tasks controller here.
-// They will automatically be included in application.css.
-// You can use Sass (SCSS) here: http://sass-lang.com/
+@mixin task-gradient($base) {
+  $accent: darken($base, 20%);
+  background: $base;
+  background-image: -webkit-gradient(linear, left top, left bottom, from($base), to($accent));
+  background-image: -webkit-linear-gradient(top, $base, $accent);
+  background-image: -moz-linear-gradient(top, $base, $accent);
+  background-image: -o-linear-gradient(top, $base, $accent);
+  background-image: -ms-linear-gradient(top, $base, $accent);
+  background-image: linear-gradient(top, $base, $accent);
+}
+
+$meter-height: 30px;
+
+table#tasks {
+  margin: 15px;
+  border-spacing: 0px;
+
+  tr {
+    height: $meter-height + 40px;
+    padding: 10px;
+
+    td.task-bar {
+      width: 700px;
+      &.pointer { cursor: pointer; }
+    }
+
+    td.task-name {
+      padding: 0px 10px;
+    }
+
+    &.controls-panel {
+      display: none;
+      form { float: left; }
+      .numeric, .custom-points { width: 40px; }
+      .delete { @include button(#d00); }
+    }
+
+    &.joined {
+      background-color: rgba(0, 0, 0, 0.3);
+    }
+  }
+}
+
+#tasks-container {
+  margin-top: 50px;
+}
+
+.task-container {
+  @include border-radius(10px);
+  background: rgba(0, 0, 0, 0.3);
+  height: $meter-height;
+  padding: 8px;
+
+  .task-progress {
+    height: 100%;
+    width: 0px;
+    @include border-radius(5px);
+  }
+}
+
+.change-colour {
+  border: 1px solid #fff;
+  width: 15px;
+  height: 15px;
+  margin: 11px 4px;
+  float: left;
+  cursor: pointer;
+}
+
+.c1 { @include task-gradient(#39f); }
+.c2 { @include task-gradient(#f33); }
+.c3 { @include task-gradient(#9f9); }
+.c4 { @include task-gradient(#995ac4); }
+.c5 { @include task-gradient(#fff); }
+.c6 { @include task-gradient(#555); }
+.c7 { @include task-gradient(#d2691e); }
+.c8 { @include task-gradient(#00bfff); }
+.c9 { @include task-gradient(#4682b4); }

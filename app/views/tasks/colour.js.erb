@@ -1,0 +1,13 @@
+var elm = $("#<%= dom_id(@task) %>").find(".task-progress");
+c = elm.attr("class").match(/c[0-9]+/);
+if (c) c = c[0];
+elm.removeClass(c);
+elm.addClass("<%= @task.colour %>");
+
+for (var i = 0; i < $.chart_data.length; i++) {
+  if ($.chart_data[i].label == "<%= @task.name %>") {
+    $.chart_data[i].color = "<%= @task.base_colour %>";
+  }
+}
+
+chartDays();

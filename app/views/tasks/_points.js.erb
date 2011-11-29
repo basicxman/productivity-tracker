@@ -1,0 +1,22 @@
+// Get task.
+var task = $("#<%= dom_id(@task) %>");
+
+// Set achieved points in task text.
+task.find("span.achieved").text("<%=n @task.achieved_points %>");
+
+// Set progress meters.
+setProgress(task.find(".task-progress"),       <%= @task.required_points %>, <%= @task.achieved_points %>);
+setProgress($("#todays-quota .task-progress"), <%= user.todays_quota %>, <%= user.todays_points %>);
+
+// Set active quota.
+setGlobalQuota(<%= user.current_quota %>);
+
+<% @point = [@point] unless @point.is_a? Array %>
+<% @point.each do |point| %>
+  // Update points in scheduling area.
+  $("#<%= dom_id(point.day) %> .schedule-points").text("<%=n point.day.current_points %>");
+
+  // Update chart.
+  checkChartDataForDay(<%= point.day.date.to_datetime.to_i * 1000 %>);
+  updateTaskChart("<%= @task.name %>", <%= point.value %>, <%= point.day.date.to_datetime.to_i * 1000 %>);
+<% end %>

@@ -21,7 +21,7 @@ module DaysHelper
   end
 
   def week_headings
-    %w( Sun Mon Tue Wed Thu Fri Sat )
+    %w( Mon Tue Wed Thu Fri Sat Sun )
   end
 
   def get_month_and_year

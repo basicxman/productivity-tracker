@@ -23,4 +23,25 @@ class TasksController < ApplicationController
       flash[:notice] = "Unable to create task."
     end
   end
+
+  def update
+    @task = Task.find(params[:id].to_i)
+    @task.update_attributes(params[:task])
+    @point = @task.add_points(params[:task][:custom_points].to_f)
+    if @task.save
+      flash[:notice] = "Updated task."
+    else
+      flash[:notice] = "Unable to update task."
+    end
+  end
+
+  def destroy
+    @task = Task.find(params[:id].to_i)
+    @task.destroy
+  end
+
+  def colour
+    @task = Task.find(params[:id].to_i)
+    @task.update_attribute(:colour, params[:colour])
+  end
 end

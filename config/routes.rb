@@ -3,6 +3,7 @@ Scheduler::Application.routes.draw do
   resources :tasks do
     member do
       post "points"
+      post "colour", :as => :change_colour
     end
   end
 

@@ -158,4 +158,21 @@ $(function() {
   $(window).bind("ajax:complete", function() {
     $("#loader-container").hide();
   });
+
+  $(".tooltip").live("mouseenter focusin", function() {
+    var tt = $(this).children(".tooltip-text");
+    if (tt.length == 0) {
+      tt = $("<div class='tooltip-text'>" + $(this).data("tooltip") + "</div>")
+      tt.appendTo($(this));
+    }
+    tt.show();
+
+    var xy = $(this).position();
+    var centeringOffset = ($(this).width() - tt.outerWidth()) / 2;
+    tt.css({ left: xy.left + centeringOffset, top: xy.top + $(this).height() });
+  });
+
+  $(".tooltip").live("mouseleave focusout", function() {
+    $(this).children(".tooltip-text").hide();
+  });
 });

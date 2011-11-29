@@ -20,44 +20,6 @@ body {
   background: image-url("black-linen.png");
 }
 
-table#tasks {
-  margin: 15px;
-
-  tr {
-    height: $meter-height + 30px;
-    td.task-bar {
-      width: 700px;
-    }
-    td.task-name {
-      padding: 0px 10px;
-    }
-  }
-}
-
-#tasks-container {
-  margin-top: 50px;
-}
-
-.task-container {
-  @include border-radius(10px);
-  background: rgba(0, 0, 0, 0.3);
-  height: $meter-height;
-  padding: 8px;
-
-  .task-progress {
-    background: $progress-colour;
-    height: 100%;
-    width: 0px;
-    @include border-radius(5px);
-    background-image: -webkit-gradient(linear, left top, left bottom, from(rgb(51, 153, 255)),to(rgb(42, 128, 213)));
-    background-image: -webkit-linear-gradient(top, rgb(51, 153, 255), rgb(42, 128, 213));
-    background-image: -moz-linear-gradient(top, rgb(51, 153, 255), rgb(42, 128, 213));
-    background-image: -o-linear-gradient(top, rgb(51, 153, 255), rgb(42, 128, 213));
-    background-image: -ms-linear-gradient(top, rgb(51, 153, 255), rgb(42, 128, 213));
-    background-image: linear-gradient(top, rgb(51, 153, 255), rgb(42, 128, 213));
-  }
-}
-
 #header {
   position: fixed;
   z-index: 1000;
@@ -243,5 +205,34 @@ div.graph-visible, div.graph-hidden { cursor: pointer; }
     width: 80px;
     height: 80px;
     @include border-radius(10px);
+  }
+}
+
+.tooltip {
+  display: inline-block;
+
+  .tooltip-text {
+    z-index: 999;
+    position: absolute;
+    background-color: #000;
+    color: #eee;
+    padding: 10px;
+    font-size: 80%;
+    display: none;
+    margin-top: 10px;
+    @include border-radius(5px);
+
+    &:before {
+      content: ' ';
+      position: absolute;
+      margin-top: -19px;
+      width: 0px;
+      height: 0px;
+      left: 50%;
+      margin-left: -9px;
+      border-left: 9px solid transparent;
+      border-right: 9px solid transparent;
+      border-bottom: 9px solid #000;
+    }
   }
 }

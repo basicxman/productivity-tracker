@@ -4,6 +4,8 @@ class Task < ActiveRecord::Base
 
   validates_numericality_of :required_points, :greater_than => 0
 
+  attr_accessor :custom_points
+
   def iterative_deduction(value, points = [])
     return points if value == 0
 
@@ -27,8 +29,6 @@ class Task < ActiveRecord::Base
     point.value ||= 0
     if value < 0
       point.save
-      puts "Saved point."
-      puts "Starting iterative deduction"
       return iterative_deduction(-value)
     end
 
@@ -48,4 +48,17 @@ class Task < ActiveRecord::Base
     day = Day.find(:first, :conditions => { :user_id => user.id, :date => Date.today })
     Point.find(:first, :conditions => { :task_id => self.id, :day_id => day.id }).value
   end
+
+  def colour_class
+    self.colour || DEFAULT_COLOUR_CLASS
+  end
+
+  def base_colour
+    index = self.colour[1..-1].to_i - 1
+    colours = %w( #39f #f33 #9f9 #995ac4 #fff #555 #d2691e #00bfff #4682b4 )
+    colours[index]
+  end
+
+  NUMBER_OF_COLOURS = 9
+  DEFAULT_COLOUR_CLASS = "c1"
 end

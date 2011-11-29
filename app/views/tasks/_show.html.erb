@@ -5,9 +5,9 @@
     <div class="graph-hidden"><%= image_tag image_path("graph_hidden.png"), :width => "30", :class => "graph-hidden graph-button", "data-task" => @task.name %></div>
     <div class="graph-visible"><%= image_tag image_path("graph_visible.png"), :width => "30", :class => "graph-visible graph-button", "data-task" => @task.name %></div>
   </td>
-  <td class="task-name"><%= @task.name %> (<span class="achieved"><%=n @task.achieved_points %></span> / <span class="quota"><%=n @task.required_points %></span>)</td>
-  <td class="task-bar">
-    <%= render :partial => "progress" %>
+  <td class="task-name"><span class="name"><%= @task.name %></span> (<span class="achieved"><%=n @task.achieved_points %></span> / <span class="quota"><%=n @task.required_points %></span>)</td>
+  <td class="task-bar pointer">
+    <%= render :partial => "progress", :locals => { :task => @task } %>
   </td>
   <td class="task-points">
     <%= points_button(@task, 0.5,  "small") %>
@@ -16,5 +16,20 @@
     <%= points_button(@task, -0.5, "small") %>
   </td>
 </tr>
-<tr id="panel-<%= dom_id(@task) %>">
+
+<tr id="panel-<%= dom_id(@task) %>" class="controls-panel">
+  <td colspan="4">
+    <% 1.upto(Task::NUMBER_OF_COLOURS) do |n| %>
+      <%= link_to "", change_colour_task_path(@task, :colour => "c#{n}"), :method => :post, :remote => true, :class => "change-colour c#{n}" %>
+    <% end %>
+
+    <%= form_for @task, :remote => true do |f| %>
+      <span class="tooltip" data-tooltip="Task Name"><%= f.text_field :name %></span>
+      <span class="tooltip" data-tooltip="Required Points"><%= f.text_field :required_points, :class => "numeric" %></span>
+      <span class="tooltip" data-tooltip="Custom Points"><%= f.text_field :custom_points, :class => "custom-points", :value => "0" %></span>
+      <%= f.submit "Update" %>
+    <% end %>
+    <%= button_to "Delete", task_path(@task), :method => :delete, :remote => true, :confirm => "Are you sure?", :class => "delete" %>
+    <div style="clear: both;"></div>
+  </td>
 </tr>

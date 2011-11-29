@@ -47,7 +47,7 @@ class User < ActiveRecord::Base
     total_data = []
     tasks_data = {}
     tasks = self.tasks
-    tasks.each { |t| tasks_data[t.name] = [] }
+    tasks.each { |t| tasks_data[t.name] = { :data => [], :color => "#39f" } }
     none_discovered = true
     (Date.today - 31.days).upto(Date.today) do |date|
       day = Day.find(:first, :conditions => { :date => date, :user_id => self.id })
@@ -57,13 +57,14 @@ class User < ActiveRecord::Base
       graph_date = date.to_datetime.to_i * 1000
       total_data << [graph_date, day ? day.points.sum("value") : 0]
       tasks.each do |task|
+        tasks_data[task.name][:color] = task.base_colour
         point_value = day ? Point.where(:task_id => task.id, :day_id => day.id).sum("value") : 0
-        tasks_data[task.name] << [graph_date, point_value]
+        tasks_data[task.name][:data] << [graph_date, point_value]
       end
     end
 
     tasks_data = tasks_data.inject([]) do |data_arr, pair|
-      data_arr + [{ :data => pair[1], :label => pair[0] }]
+      data_arr + [{ :label => pair[0] }.merge(pair[1])]
     end
     tasks_data + [ { :color => "#39f", :data => total_data, :label => "Total" } ]
   end
